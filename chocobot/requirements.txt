@@ -1,0 +1,7 @@
+aspose_words==25.1.0
+numpy==2.2.2
+opencv_python_headless==4.11.0.86
+Pillow==11.1.0
+potracer==0.0.4
+rembg==2.0.62
+svgwrite==1.4.3
