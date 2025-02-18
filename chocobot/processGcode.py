@@ -1,7 +1,7 @@
 outputFile = open("./output_grid_processed.gcode", 'wt')
 penDown = "0"
 penUp = "10"
-speed = "50"
+speed = "500"
 def processGcode():
     with open("./output_grid.gcode", 'r') as inputFile:
         for line in inputFile.readlines():

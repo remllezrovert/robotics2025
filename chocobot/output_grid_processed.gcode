@@ -1,11 +1,11 @@
 ; WARNING: Cut is not within machine bounds of X[0,300], Y[0,400]
 ;    svg2gcode 3.3.6 (2025-02-11 14:27:23)
 ;    arguments: 
-;      movement_speed: 1000,
+;      movement_speed: 10000,
 ;      pixel_size: 0.1,
-;      image_movement_speed: 800,
+;      image_movement_speed: 80,
 ;      fan: False,
-;      rapid_move: 50,
+;      rapid_move: 500,
 ;      showimage: False,
 ;      x_axis_maximum_travel: 300,
 ;      y_axis_maximum_travel: 400,
