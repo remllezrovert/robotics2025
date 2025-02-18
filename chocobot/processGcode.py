@@ -15,7 +15,7 @@ def processGcode():
                 elif "M5" in line:
                     outputFile.write(line.replace("M5","G0 Z" + penUp))
                 elif "rapid_move:" in line:
-                    outputFile.write(line.replace(";      rapid_move: 60,",";      rapid_move: " + speed + ","))
+                    outputFile.write(";      rapid_move: " + speed + ",\n")
                 else:
                     outputFile.write(line)
         
