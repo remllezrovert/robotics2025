@@ -1,7 +1,7 @@
 
 
 outputFile = open("./output_grid_processed.gcode", 'wt')
-penDown = "3.15"
+penDown = "3.5"
 penUp = "3.5"
 def processGcode():
     with open("./output_grid.gcode", 'r') as inputFile:
@@ -19,8 +19,8 @@ def processGcode():
                     outputFile.write(line)
         
 
-## m3 means lazer on, replace this with "pen down"
-## m5 means lazzer off, replace this with "pen up"
+## m3 means laser on, replace this with "pen down"
+## m5 means laser off, replace this with "pen up"
 ## Adust speed everywhere
 ## ensure that the pen height has a baseline raised height just above the choolate bar
 
