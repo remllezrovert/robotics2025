@@ -5,7 +5,7 @@
 ;      pixel_size: 0.1,
 ;      image_movement_speed: 800,
 ;      fan: False,
-;      rapid_move: 10,
+;      rapid_move: 60,
 ;      showimage: False,
 ;      x_axis_maximum_travel: 300,
 ;      y_axis_maximum_travel: 400,
