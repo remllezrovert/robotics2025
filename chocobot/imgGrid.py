@@ -81,7 +81,7 @@ def file_to_svg(filename: str):
 
 
 
-def image_to_svg(image_path, output_path, scale_factor=1, color_count=2, stroke_width=8):
+def image_to_svg(image_path, output_path, scale_factor=0.5, color_count=2, stroke_width=8):
     # Open image
     with Image.open(image_path) as img:
         width, height = img.size
