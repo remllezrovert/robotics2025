@@ -2,10 +2,28 @@ outputFile = open("./output_grid_processed.gcode", 'wt')
 penDown = "0"
 penUp = "10"
 speed = "500"
+scale = 0.1
 def processGcode():
     with open("./output_grid.gcode", 'r') as inputFile:
         for line in inputFile.readlines():
             if line.strip():
+                if ("G1" in line or "G0" in line) and ("X" in line or "Y" in line):
+                    lineArr = line.split(" ")
+                    outArr = []
+                    for word in  lineArr:
+                        if "G" in word:
+                            outArr.append(word)
+                            continue
+                        elif "X" in word:
+                            outArr.append("X" + str(float(word.replace("X", "")) / 30))
+                        elif "Y" in line:
+                            outArr.append("Y" + str(float(word.replace("Y", "")) / 30))
+                        else:
+                            outArr.append(word)
+                    line = " ".join(outArr)    
+                    outputFile.write(line + "\n")
+                    print(line)
+                    pass
                 if "laser" in line or "power" in line:
                     pass   
                 elif "S300" in line:

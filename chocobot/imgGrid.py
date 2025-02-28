@@ -24,33 +24,49 @@ def file_to_svg(filename: str):
         print("Image (%s) could not be loaded." % filename)
         return
     
-    bm = Bitmap(image, blacklevel=0.5)
+    bm = Bitmap(image, blacklevel=0.25)
     plist = bm.trace(
-        turdsize=2,
+        turdsize=5,
         turnpolicy=POTRACE_TURNPOLICY_MINORITY,
         alphamax=1,
         opticurve=False,
-        opttolerance=0.2,
+        opttolerance=0.8,
     )
 
     
     img_array= np.array(image)
-    #img_array= cv2.bilateralFilter(img_array, d=9, sigmaColor=100, sigmaSpace=75)
 
-    #img_array = cv2.Canny(img_array, threshold1=50, threshold2=100)
-
-    #img_array = cv2.findContours(img_array, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if img_array is None:
+        raise ValueError("Image not loaded correctly. Check the file path.")
     
+    # Check if the image is already grayscale (1 channel)
+    if len(img_array.shape) == 3:  # It has 3 channels, likely a color image
+        gray_img = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
+    else:
+        gray_img = img_array  # Image is already grayscale, no conversion needed
 
-    edges_pil = Image.fromarray(img_array)  # Convert the NumPy array to a PIL image
+    # Optionally, apply threshold to make the image binary (if required for contours)
+    _, binary_img = cv2.threshold(gray_img, 127, 255, cv2.THRESH_BINARY)
+
+    # Now, find contours on the binary image
+    contours, _ = cv2.findContours(binary_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+    # Example: You may want to draw contours on the image (binary_img)
+    contour_img = cv2.drawContours(binary_img.copy(), contours, -1, (255, 0, 0), 3)
+
+    # Convert the resulting NumPy array to a PIL image for further processing
+    edges_pil = Image.fromarray(contour_img)
+
+
     edges_pil.save('output_grid.jpg')
 
         
 
-    
+    imageWidth = 300 
+    imageHeight = 400
     with open(f"output_grid.svg", "w") as fp:
         fp.write(
-            f'''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{image.width}" height="{image.height}" viewBox="0 0 {image.width} {image.height}">''')
+            f'''<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{imageWidth}" height="{imageHeight}" viewBox="0 0 {imageWidth} {image.height}">''')
         
         parts = []
         for curve in plist:
@@ -195,5 +211,5 @@ grid.save("output_grid.jpg")
 ##image_to_svg("./output_grid.jpg", "./output_image.svg")
 file_to_svg("output_grid.jpg")
 print(image_files)
-os.system("svg2gcode output_grid.svg output_grid.gcode")
+os.system("svg2gcode --selfcenter output_grid.svg output_grid.gcode")
 subprocess.run(["python", "processGcode.py"])
