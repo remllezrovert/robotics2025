@@ -15,7 +15,7 @@ def processGcode():
                             outArr.append(word)
                             continue
                         elif "X" in word:
-                            outArr.append("X" + str(float(word.replace("X", "")) / 30))
+                            outArr.append("X" + str(float(word.replace("X", "")) / 30 + 67.5))
                         elif "Y" in line:
                             outArr.append("Y" + str(float(word.replace("Y", "")) / 30))
                         else:
