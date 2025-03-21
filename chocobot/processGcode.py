@@ -1,6 +1,6 @@
 outputFile = open("./output_grid_processed.gcode", 'wt')
 penDown = "0"
-penUp = "10"
+penUp = "2"
 speed = "500"
 scale = 0.1
 def processGcode():
